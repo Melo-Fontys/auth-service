@@ -27,6 +27,7 @@ kind: Service
 metadata:
   name: auth-clusterip-srv
 spec:
+  type: LoadBalancer
   selector:
     app: auth
   ports:
