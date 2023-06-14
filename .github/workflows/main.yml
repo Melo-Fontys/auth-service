@@ -24,6 +24,25 @@ jobs:
         run: docker build . --file Dockerfile -t "$DOCKER_USERNAME/$PRODUCT_REPO_NAME:latest"
       - name: Push user service docker image
         run: docker push "$DOCKER_USERNAME/$PRODUCT_REPO_NAME:latest"
+  create-database-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Work Dir
+        run: |
+          echo $DOCKER_USERNAME
+          echo $DOCKER_PASSWORD
+          echo $PRODUCT_REPO_NAME
+      - name: Docker login
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Build db docker image
+        run: docker build -t alexandraioan/postgres-image .
+      - name: Tag db docker image
+        run: docker tag alexandraioan/postgres-image alexandraioan/postgres-image:latest
+      - name: Push db docker image
+        run: docker push alexandraioan/postgres-image:latest
+
   deployment:
       needs: [create-user-image]
       runs-on: ubuntu-latest
