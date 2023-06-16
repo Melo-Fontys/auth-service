@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "postgres-image",
+    HOST: "0.0.0.0",
     USER: "me",
     PASSWORD: "password",
     DB: "api",
